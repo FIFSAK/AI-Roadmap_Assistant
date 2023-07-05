@@ -47,8 +47,12 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
   }
   const handleShowMajors = async () => {
     try {
-      const res = await axios.post('/api/majors', { showMajors: true });
-      setShowMajors(res.data); // Обновляем состояние на основе ответа от сервера
+      const res = await axios.get('http://127.0.0.1:8000/majors_data');
+      console.log(res)
+      const majors = res.data; // Обновляем состояние на основе ответа от сервера
+      const majorsMessage = Object.entries(majors).map(([major, description]) => `${major}: ${description}`).join('\n');
+      sendMessage(majorsMessage); // Отправляем сообщение с перечнем специальностей в чат
+      // sendMajors(majorsMessage)
     } catch (err) {
       console.error(err); // Обработка ошибок
     }
@@ -133,6 +137,10 @@ const useMessages = () => {
   const [error, setError] = useState(null);
 
   // send message to API /api/chat endpoint
+
+
+
+
   const sendMessage = async (newMessage) => {
     setLoading(true)
     setError(null)
