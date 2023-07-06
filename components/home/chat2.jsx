@@ -46,19 +46,15 @@ const InputMessage = ({ input, setInput, sendMessage, loading }) => {
     }
   }
   const handleShowMajors = async () => {
-    // Get the user's input. This could come from a form or some input field.
-    const userInput = input; // Assuming 'input' contains the user's typed message
-  
     try {
-      // Send the user's input as a POST request to the endpoint.
-      const res = await axios.post('http://127.0.0.1:8000/roadmap_create', { message: userInput });
-  
+      const res = await axios.get('http://127.0.0.1:8000/majors_data');
       console.log(res)
-      const majors = res.data;
+      const majors = res.data; // Обновляем состояние на основе ответа от сервера
       const majorsMessage = Object.entries(majors).map(([major, description]) => `${major}: ${description}`).join('\n');
-      sendMessage(majorsMessage);
+      sendMessage(majorsMessage); // Отправляем сообщение с перечнем специальностей в чат
+      // sendMajors(majorsMessage)
     } catch (err) {
-      console.error(err);
+      console.error(err); // Обработка ошибок
     }
   };
 
@@ -150,7 +146,7 @@ const useMessages = () => {
       { role: 'user', content: newMessage },
     ]
     setMessages(newMessages)
-    const last10messages = newMessages.slice(-1) // remember last 10 messages
+    const last10messages = newMessages.slice(-10) // remember last 10 messages
 
     const response = await fetch('/api/chat', {
       method: 'POST',

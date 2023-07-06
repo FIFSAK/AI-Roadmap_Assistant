@@ -1,0 +1,75 @@
+[
+    {
+      "name": "Computer Science",
+      "description": "The study of computers and computing technologies. It covers everything from algorithms and data structures to computer architecture and artificial intelligence."
+    },
+    {
+      "name": "Information Systems",
+      "description": "Focuses on how businesses and organizations use technology to operate efficiently and effectively. It combines business practices with technical expertise."
+    },
+    {
+      "name": "Software Engineering",
+      "description": "The practice of designing, implementing, and modifying software to ensure it is of high quality, affordable, maintainable, and fast to build. It involves the application of engineering practices to software."
+    },
+    {
+      "name": "Cybersecurity",
+      "description": "Focuses on protecting systems, networks, and programs from digital attacks. These attacks are usually aimed at accessing, changing, or destroying sensitive information; extorting money from users; or interrupting normal business processes."
+    },
+    {
+      "name": "Data Science",
+      "description": "A multidisciplinary field that uses scientific methods, processes, algorithms, and systems to extract knowledge and insights from structured and unstructured data. It requires knowledge of statistics, machine learning, and programming."
+    },
+    {
+      "name": "Network Administration/Engineering",
+      "description": "Focuses on the design, implementation, and management of an organization's networks. This includes local area networks (LANs), wide area networks (WANs), and other data communication systems."
+    },
+    {
+      "name": "Cloud Computing",
+      "description": "Focuses on the delivery of computing services—including servers, storage, databases, networking, software, analytics, and intelligence—over the Internet ('the cloud') to offer faster innovation, flexible resources, and economies of scale."
+    },
+    {
+      "name": "Health Informatics",
+      "description": "The intersection of healthcare, information technology and business administration. It focuses on the management of healthcare information and implementation of technology in the medical field."
+    },
+    {
+      "name": "Artificial Intelligence (AI) and Machine Learning (ML)",
+      "description": "Involves the creation and application of algorithms that allow computers to learn from data and make decisions or predictions. It's a rapidly evolving area with applications in many sectors such as finance, healthcare, and technology."
+    },
+    {
+      "name": "Bioinformatics",
+      "description": "An interdisciplinary field that involves the application of computational methods to understand biological data. It combines biology, computer science, information engineering, mathematics, and statistics to analyze and interpret biological data."
+    },
+    {
+      "name": "Human-Computer Interaction (HCI)",
+      "description": "About understanding the interaction between humans and computers, with the goal of making user interfaces that are intuitive and easy to use."
+    },
+    {
+      "name": "Systems Analysis",
+      "description": "Involves studying an organization's current computer systems and procedures, and designing solutions to help the organization operate more efficiently and effectively."
+    },
+    {
+      "name": "Database Administration",
+      "description": "Involves the use and management of databases. Database administrators are responsible for securely storing and organizing data, and ensuring that it's available to users when needed."
+    },
+    {
+      "name": "Web Development",
+      "description": "Focuses on the design and creation of websites. It can be further divided into front-end (client-side) and back-end (server-side) development."
+    },
+    {
+      "name": "Digital Media",
+      "description": "InvolvesHere's the rest of the JSON"
+    },
+    {
+      "name": "Digital Media",
+      "description": "Involves the creation and management of digital content, such as images, videos, audio, and interactive elements. It's often used in marketing and advertising, as well as in the creation of websites and apps."
+    },
+    {
+      "name": "IT Project Management",
+      "description": "About applying project management principles to IT projects. It involves planning, executing, and overseeing the implementation of IT services and systems."
+    },
+    {
+      "name": "Game Development",
+      "description": "Involves the creation of video games, and requires knowledge in areas such as computer graphics, artificial intelligence, and software engineering."
+    }
+  ]
+  

@@ -1,8 +1,8 @@
 "use client";
 
+import useScroll from "@/lib/hooks/use-scroll";
 import Image from "next/image";
 import Link from "next/link";
-import useScroll from "@/lib/hooks/use-scroll";
 import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 
@@ -29,7 +29,13 @@ export default function NavBar({ session }) {
             ></Image>
             <p>Road map Assistant</p>
           </Link>
-          <div>
+          <div className="flex items-center">
+            <Link href="/majors" className="mr-4 text-black hover:underline">
+              List of Majors
+            </Link>
+            <Link href="/" className="mr-4 text-black hover:underline">
+               Home
+            </Link>
             {session ? (
               <UserDropdown session={session} />
             ) : (
