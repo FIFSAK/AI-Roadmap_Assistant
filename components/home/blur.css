@@ -1,0 +1,11 @@
+.chat-container::after {
+    content: "";
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 60px;  /* Adjust height if necessary */
+    background: inherit;
+    backdrop-filter: blur(10px);
+    z-index: 2;
+}
