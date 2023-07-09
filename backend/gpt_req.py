@@ -2,8 +2,7 @@ import os
 import dotenv
 import openai
 import logging
-from aiogram import Bot, Dispatcher, executor, types
-import asyncio
+
 
 
 
