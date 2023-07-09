@@ -54,11 +54,11 @@ def create_rm(message: Message):
                     """)
             )
             response = future_response.result()
-            yield f"data: {response}\n\n"
+            yield response
     
             future_links = executor.submit(search_links_lch, response)
             links = future_links.result()
-            yield f"data: {links}\n\n"
+            yield links
     
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 

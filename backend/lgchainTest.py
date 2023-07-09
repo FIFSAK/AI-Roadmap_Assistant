@@ -18,3 +18,11 @@ def search_links_lch(response):
     print("LINKS CREATED")
     print(query)
     return query
+
+
+a= """1. Programming Languages:
+   - Learn a server-side language such as Python, Java, or Node.js.
+   - Understand the fundamentals of the chosen language, including data types, variables, control structures, and functions.
+"""
+
+print(search_links_lch(a))
