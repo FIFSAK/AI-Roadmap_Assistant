@@ -98,3 +98,7 @@
 
 # Remember to practice coding regularly, work on projects, and keep up with industry trends and best practices. Good luck on your learning journey!
 # """
+
+
+"""    raise ServerSelectionTimeoutError(
+pymongo.errors.ServerSelectionTimeoutError: ac-ruansye-shard-00-00.plqvoke.mongodb.net:27017: timed out,ac-ruansye-shard-00-02.plqvoke.mongodb.net:27017: timed out,ac-ruansye-shard-00-01.plqvoke.mongodb.net:27017: timed out, Timeout: 30s, Topology Description: <TopologyDescription id: 64ad0a5aaf7a710cd9e54083, topology_type: ReplicaSetNoPrimary, servers: [<ServerDescription ('ac-ruansye-shard-00-00.plqvoke.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-ruansye-shard-00-00.plqvoke.mongodb.net:27017: timed out')>, <ServerDescription ('ac-ruansye-shard-00-01.plqvoke.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-ruansye-shard-00-01.plqvoke.mongodb.net:27017: timed out')>, <ServerDescription ('ac-ruansye-shard-00-02.plqvoke.mongodb.net', 27017) server_type: Unknown, rtt: None, error=NetworkTimeout('ac-ruansye-shard-00-02.plqvoke.mongodb.net:27017: timed out')>]>"""

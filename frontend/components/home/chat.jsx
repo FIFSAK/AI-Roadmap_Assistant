@@ -78,10 +78,10 @@ const useMessages = (email) => {
   }
   const likeMessage = async (message) => {
     try {
-      await axios.post('http://127.0.0.1:8000/save_email', {
-        email,
-        roadmap: message
-      })
+      await axios.post('http://127.0.0.1:8000/save_roadmap', {
+  roadmap: {roadmap: message},
+  email: {email: email}
+})
     } catch (err) {
       console.error(err)
     }

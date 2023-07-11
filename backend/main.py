@@ -8,6 +8,25 @@ from fastapi.middleware.cors import CORSMiddleware
 from gpt_req import make_request
 from lgchainTest import search_links_lch
 from fastapi.responses import StreamingResponse
+from pymongo.mongo_client import MongoClient
+import os
+import dotenv
+
+
+
+dotenv.load_dotenv(dotenv.find_dotenv())
+
+
+
+password = os.getenv("PASSWORD_MONGODB")
+
+uri = f"mongodb+srv://anuar200572:{password}@cluster0.plqvoke.mongodb.net/?retryWrites=true&w=majority"
+
+# Create a new client and connect to the server
+client = MongoClient(uri)
+db = client['RoadMaps']
+user_collection = db['users']
+
 
 
 app = FastAPI()
@@ -119,18 +138,59 @@ Roadmap for Backend Developer:
     - Study the concepts of microservices and their benefits.
     - Learn about service discovery, load balancing, and inter-service communication.
 
+1. Programming Languages:
+   - Python: https://www.codecademy.com/learn/learn-python
+   - Java: https://www.codecademy.com/learn/learn-java
+   - Node.js: https://www.codecademy.com/learn/learn-node-js
+
+2. Databases:
+   - MySQL: https://www.codecademy.com/learn/learn-sql
+   - PostgreSQL: https://www.codecademy.com/learn/learn-sql-postgresql
+   - MongoDB: https://www.mongodb.com/learn/
+   - Redis: https://redislabs.com/resources/getting-started-with-redis/
+
+3. Web Development:
+   - HTML: https://www.codecademy.com/learn/learn-html
+   - CSS: https://www.codecademy.com/learn/learn-css
+   - JavaScript: https://www.codecademy.com/learn/introduction-to-javascript
+
+4. API Development:
+   - Design and
 Remember to practice coding regularly, work on projects, and keep up with industry trends and best practices. Good luck on your learning journey!
 """
     return a
 
-class EmailRoadmap(BaseModel):
-    email : str
-    roadmap : str
 
-@app.post("/save_email")
-def save_email(data: EmailRoadmap):
-    print(data.email)
-    print(data.roadmap)
+
+class Email(BaseModel):
+    email: str
+
+class Roadmap(BaseModel):
+    roadmap: str
+
+@app.post("/save_roadmap")
+async def save_roadmap(roadmap: Roadmap, email: Email):
+    existing_user = user_collection.find_one({"email": email.email})
+    if existing_user is not None:
+        result = user_collection.update_one({"email": email.email}, {"$push": {"roadmaps": roadmap.roadmap}})
+        print("Roadmap added to user with email ", email.email)
+    else:
+        user_document = {
+            "email": email.email,
+            "roadmaps": [roadmap.roadmap]
+        }
+        result = user_collection.insert_one(user_document)
+        print("User inserted with id ", result.inserted_id, " and roadmap")
+
+
+
+@app.get("/user_roadmaps")
+async def get_user_roadmaps(email: str):
+    user = user_collection.find_one({"email": email})
+    if user is not None:
+        return {"roadmaps": user['roadmaps']}
+    else:
+        return {"error": "User not found"}
 
 
 
