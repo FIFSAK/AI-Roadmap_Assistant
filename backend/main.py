@@ -185,8 +185,8 @@ async def save_roadmap(roadmap: Roadmap, email: Email):
 
 
 @app.get("/user_roadmaps")
-async def get_user_roadmaps(email: str):
-    user = user_collection.find_one({"email": email})
+async def get_user_roadmaps(email: Email):
+    user = user_collection.find_one({"email": email.email})
     if user is not None:
         return {"roadmaps": user['roadmaps']}
     else:
