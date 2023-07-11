@@ -4,10 +4,7 @@ import openai
 import logging
 
 
-
-
 dotenv.load_dotenv(dotenv.find_dotenv())
-
 
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -28,3 +25,4 @@ def make_request(message, prompt, max_tokens = None):
     )
 
     return response['choices'][0]['message']['content']
+

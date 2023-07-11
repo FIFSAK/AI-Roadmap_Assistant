@@ -15,7 +15,7 @@ const MajorsList = () => {
         <div className={s.container}>
             {majors.map((major, index) => (
                 <div className={s.card} key={index}>
-                    <div onClick={() => showdesc(index)}>{major[1].name}</div>
+                    <div className={s.name} onClick={() => showdesc(index)}>{major[1].name}</div>
                     <div className={index === shownDescIndex ? `${s.show}` : `${s.hide}`}>{major[1].description}</div>
                 </div>
             ))}

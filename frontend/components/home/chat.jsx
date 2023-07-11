@@ -1,8 +1,10 @@
 'use client'
 import axios from 'axios';
-import { useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './blur.css';
 import { ChatLine } from './chat-line';
+
+
 
 const initialMessages = [
   {
@@ -52,9 +54,7 @@ const InputMessage = ({ input, setInput, sendMessage }) => {
   )
 }
 
-
-
-const useMessages = () => {
+const useMessages = (email) => {
   const [messages, setMessages] = useState(initialMessages)
 
   const sendMessage = async (newMessage) => {
@@ -76,16 +76,27 @@ const useMessages = () => {
       console.error(err)
     }
   }
+  const likeMessage = async (message) => {
+    try {
+      await axios.post('http://127.0.0.1:8000/save_email', {
+        email,
+        roadmap: message
+      })
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   return {
     messages,
     sendMessage,
+    likeMessage,
   }
 }
 
-export default function Chat() {
+export default function Chat({ email }) {
   const [input, setInput] = useState('')
-  const { messages, sendMessage } = useMessages()
+  const { messages, sendMessage, likeMessage } = useMessages(email)
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
@@ -96,7 +107,7 @@ export default function Chat() {
     <div className="flex-1 w-full border-zinc-100 overflow-hidden">
       <div style={{ maxHeight: 'calc(100vh - 165px)', overflowY: 'scroll' }}>
         {messages.map(({ content, role }, index) => (
-          <ChatLine key={index} role={role} content={content} />
+          <ChatLine key={index} role={role} content={content} onLike={() => likeMessage(content)} />
         ))}
         <div ref={messagesEndRef} />
       </div>

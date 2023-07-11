@@ -1,8 +1,16 @@
 .card {
     display: flex;
-    flex-direction: row;
-    border: 1px solid black;
+    flex-direction: column;
+    /* border: 1px solid black; */
+    border-radius: 30px;
+    background-color: rgb(185, 185, 185);   
     width: 300px;
+}
+
+.name {
+    background-color: rgb(239, 239, 239);
+    height: 50px;
+    z-index: 5;
 }
 
 .container {

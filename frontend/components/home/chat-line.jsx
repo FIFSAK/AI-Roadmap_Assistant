@@ -1,4 +1,7 @@
+import React from 'react';
 import { CommandLineIcon, UserIcon } from '@heroicons/react/24/outline'
+import Linkify from 'react-linkify';
+
 
 // loading placeholder animation for the chat line
 export const LoadingChatLine = () => (
@@ -25,12 +28,12 @@ const convertNewLines = (text) =>
     </span>
   ))
 
-export function ChatLine({ role = 'assistant', content, isStreaming }) {
+export function ChatLine({ role = 'assistant', content, isStreaming, onLike }) {
   if (!content) {
     return null
   }
   const contentWithCursor = `${content}${isStreaming ? '▍' : ''}`
-  const formatteMessage = convertNewLines(contentWithCursor)
+  const formattedMessage = convertNewLines(contentWithCursor)
 
   return (
     <div
@@ -55,8 +58,15 @@ export function ChatLine({ role = 'assistant', content, isStreaming }) {
         </div>
 
         <div className="prose whitespace-pre-wrap flex-1">
-          {formatteMessage}
+          <Linkify>
+            {formattedMessage}
+          </Linkify>
         </div>
+
+        {role === 'assistant' && (
+          <button onClick={onLike} className="like-button">Like</button>
+        )}
+
       </div>
     </div>
   )
