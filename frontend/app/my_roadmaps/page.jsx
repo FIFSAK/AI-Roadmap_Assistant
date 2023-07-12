@@ -1,10 +1,7 @@
 'use client'
-
 import axios from 'axios';
-import { getServerSession } from "next-auth/next";
-import { authOptions } from "@/lib/authOptions";
 import { useEffect, useState } from 'react';
-
+import ReactHtmlParser from 'react-html-parser';
 
 const useMessages = (email) => {
   const [roadmaps, setRoadmaps] = useState(null);
@@ -13,7 +10,6 @@ const useMessages = (email) => {
     const fetchRoadmaps = async () => {
       try {
         const res = await axios.get(`http://127.0.0.1:8000/user_roadmaps?email=${email}`);
-        console.log(res.status)
         if (res.status === 200) {
           setRoadmaps(res.data.roadmaps);
         } else {
@@ -29,8 +25,8 @@ const useMessages = (email) => {
   return roadmaps;
 };
 
-const UserRoadmaps = (props) => {
-  const { email } = props.searchParams;
+const UserRoadmaps = ({ searchParams }) => {
+  const { email } = searchParams;
   const roadmaps = useMessages(email);
 
   if (roadmaps === null) {
@@ -41,13 +37,19 @@ const UserRoadmaps = (props) => {
     return <p>No roadmaps found</p>;
   }
 
+  const formatRoadmapText = (text) => {
+    const formattedText = text.replace(/\n/g, '<br />')
+      .replace(/(http:\/\/|https:\/\/|www\.)[\w.-]+(\.[\w.-]+)+([\w.,@?^=%&:;\/~+#-]*[\w@?^=%&\/~+#-])?/g, '<a href="$&" target="_blank" rel="noopener noreferrer">$&</a>');
+    return { __html: formattedText };
+  };
+
   return (
     <div>
       <h1>User Roadmaps</h1>
       {roadmaps.map((roadmap, index) => (
         <div key={index}>
           <h2>Roadmap {index + 1}</h2>
-          <p>{roadmap}</p>
+          <p>{ReactHtmlParser(formatRoadmapText(roadmap).__html)}</p>
         </div>
       ))}
     </div>
