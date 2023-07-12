@@ -9,7 +9,7 @@ import { ChatLine } from './chat-line';
 const initialMessages = [
   {
     role: 'assistant',
-    content: 'Hi! I am your Road Map Assistant, choose mode.',
+    content: 'Hi! I am your Road Map Assistant.',
   },
 ]
 
