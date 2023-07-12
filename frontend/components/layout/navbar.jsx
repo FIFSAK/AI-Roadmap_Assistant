@@ -9,7 +9,6 @@ import UserDropdown from "./user-dropdown";
 export default function NavBar({ session }) {
   const { SignInModal, setShowSignInModal } = useSignInModal();
   const scrolled = useScroll(50);
-
   return (
     <>
       <SignInModal />
@@ -33,8 +32,11 @@ export default function NavBar({ session }) {
             <Link href="/majors" className="mr-4 text-black hover:underline">
               List of Majors
             </Link>
+            <Link href={`/my_roadmaps?email=${session?.user?.email}`} className="mr-4 text-black hover:underline">
+              My Roadmaps
+            </Link>
             <Link href="/" className="mr-4 text-black hover:underline">
-               Home
+              Home
             </Link>
             {session ? (
               <UserDropdown session={session} />
