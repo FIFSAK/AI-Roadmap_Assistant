@@ -79,9 +79,9 @@ const useMessages = (email) => {
   const likeMessage = async (message) => {
     try {
       await axios.post('http://127.0.0.1:8000/save_roadmap', {
-        roadmap: { roadmap: message },
-        email: { email: email }
-      })
+  roadmap: {roadmap: message},
+  email: {email: email}
+})
     } catch (err) {
       console.error(err)
     }
@@ -95,7 +95,7 @@ const useMessages = (email) => {
 }
 
 export default function Chat({ email }) {
-  console.log(email);
+console.log(email);
   const [input, setInput] = useState('')
   const { messages, sendMessage, likeMessage } = useMessages(email)
   const messagesEndRef = useRef(null)
