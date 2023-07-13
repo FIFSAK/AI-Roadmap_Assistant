@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import ReactHtmlParser from 'react-html-parser';
+import parse from 'html-react-parser';
 
 const useMessages = (email) => {
   const [roadmaps, setRoadmaps] = useState(null);
@@ -49,7 +49,7 @@ const UserRoadmaps = ({ searchParams }) => {
       {roadmaps.map((roadmap, index) => (
         <div key={index}>
           <h2>Roadmap {index + 1}</h2>
-          <p>{ReactHtmlParser(formatRoadmapText(roadmap).__html)}</p>
+          <p>{parse(formatRoadmapText(roadmap).__html)}</p>
         </div>
       ))}
     </div>
