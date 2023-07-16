@@ -9,7 +9,7 @@ const useMessages = (email) => {
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        const res = await axios.get(`https://roadmap-back-zntr.onrender.com/docs#/default/get_user_roadmaps_user_roadmaps_get?email=${email}`);
+        const res = await axios.get(`https://roadmap-back-zntr.onrender.com/user_roadmaps?email=${email}`);
         if (res.status === 200) {
           setRoadmaps(res.data.roadmaps);
           console.log(res.data.roadmaps)

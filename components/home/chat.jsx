@@ -66,7 +66,7 @@ const useMessages = (email) => {
 
     try {
       console.log(newMessage)
-      const response = await axios.post('https://roadmap-back-zntr.onrender.com/docs#/default/create_rm_roadmap_create_post', { message: newMessage })
+      const response = await axios.post('https://roadmap-back-zntr.onrender.com/roadmap_create', { message: newMessage })
 
       setMessages([
         ...newMessages,
@@ -78,7 +78,7 @@ const useMessages = (email) => {
   }
   const likeMessage = async (message) => {
     try {
-      await axios.post('https://roadmap-back-zntr.onrender.com/docs#/default/save_roadmap_save_roadmap_post', {
+      await axios.post('https://roadmap-back-zntr.onrender.com/save_roadmap', {
         roadmap: { roadmap: message },
         email: { email: email }
       })
