@@ -16,12 +16,14 @@ const MajorsList = () => {
             {majors.map((major, index) => (
                 <div className={s.card} key={index}>
                     <div className={s.name} onClick={() => showdesc(index)}>{major[1].name}</div>
-                    <div className={index === shownDescIndex ? `${s.show}` : `${s.hide}`}>{major[1].description}</div>
+                    <div className={`${s.description} ${index === shownDescIndex ? s.show : ''}`}>{major[1].description}</div>
                 </div>
             ))}
         </div>
     );
 };
+
+
 
 const MajorsPage = () => {
     return <div className={s.cont}> <MajorsList /> </div>
