@@ -38,6 +38,9 @@ export default function NavBar({ session }) {
             <Link href="/" className="mr-4 text-black hover:underline">
               Home
             </Link>
+            <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
+              Take a survey
+            </Link>
             {session ? (
               <UserDropdown session={session} />
             ) : (
