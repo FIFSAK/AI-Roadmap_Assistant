@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import React, { useState } from 'react';
 
 const questions = [
@@ -26,6 +26,8 @@ const questions = [
 
 const SurveyPage = () => {
   const [responses, setResponses] = useState(Array(questions.length).fill(''));
+  const [modalText, setModalText] = useState('');
+  const [showModal, setShowModal] = useState(false); 
 
   const handleResponseChange = (index, response) => {
     setResponses(prevResponses => {
@@ -36,6 +38,12 @@ const SurveyPage = () => {
   };
 
   const handleSubmit = async () => {
+    const allQuestionsAnswered = responses.every(response => response !== '');
+    if (!allQuestionsAnswered) {
+      setModalText("Please answer all questions");
+      setShowModal(true);
+      return;
+    }
     const response = await fetch('http://127.0.0.1:8000/receive_answers', {
       method: 'POST',
       headers: {
@@ -43,35 +51,54 @@ const SurveyPage = () => {
       },
       body: JSON.stringify({ answers: responses }),
     });
-    console.log("ksdfjsadfjslkjfskfjskdfjsklfdjsl")
-    console.log(response.data)
+
     if (response.ok) {
-      console.log("Responses sent successfully");
+      const responseBody = await response.json();  
+      if (responseBody.message) {
+        setModalText(responseBody.message);
+        setShowModal(true);
+      } else {
+        console.log("Unexpected server response:", responseBody);
+      }
     } else {
       console.log("Error sending responses");
     }
   };
 
   return (
-    <div>
-      <h1>Survey</h1>
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1 style={{ textAlign: "center" }}>Survey</h1>
       {questions.map((question, index) => (
-        <div key={index}>
-          <p>{question}</p>
+        <div key={index} style={{ marginBottom: "20px", padding: "20px", border: "1px solid #ccc", borderRadius: "5px" }}>
+          <p style={{ fontWeight: "bold" }}>{question}</p>
           {['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'].map(response => (
-            <label key={response}>
+            <label key={response} style={{ display: "block", margin: "5px 0" }}>
               <input
                 type="radio"
                 value={response}
                 checked={responses[index] === response}
                 onChange={() => handleResponseChange(index, response)}
+                style={{ marginRight: "10px" }}
               />
               {response}
             </label>
           ))}
         </div>
       ))}
-      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleSubmit} style={{ display: "block", margin: "0 auto", padding: "10px 20px", background: "#007BFF", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+        Submit
+      </button>
+      {showModal && 
+        <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center" }}>
+          <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "80%", maxWidth: "500px" }}>
+            <h2>Message:</h2>
+            <p>{modalText}</p>
+            <button onClick={() => setShowModal(false)} style={{ display: "block", margin: "20px auto", padding: "10px 20px", background: "#007BFF", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}>
+              Close
+            </button>
+          </div>
+        </div>
+      }
     </div>
   );
 };
