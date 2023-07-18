@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
+import Loading from './Loading';
 
 const useRoadmaps = (email) => {
   const [roadmaps, setRoadmaps] = useState(null);
@@ -44,7 +45,7 @@ const UserRoadmaps = ({ searchParams }) => {
   const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
 
   if (roadmaps === null) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   if (!roadmaps || roadmaps.length === 0) {
