@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios';
-import parse from 'html-react-parser';
 import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
 import Loading from './Loading';
 
 const useRoadmaps = (email) => {
@@ -10,7 +10,7 @@ const useRoadmaps = (email) => {
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        const res = await axios.get(`https://roadmap-back-zntr.onrender.com/user_roadmaps?email=${email}`);
+        const res = await axios.get(`http://127.0.0.1:8000/user_roadmaps?email=${email}`);
         if (res.status === 200) {
           setRoadmaps(res.data.roadmaps);
         } else {
@@ -39,14 +39,8 @@ const useRoadmaps = (email) => {
   return { roadmaps, deleteRoadmap };
 };
 
-const UserRoadmaps = async () => {
-  try {
-      const { email } = await axios.post('http://127.0.0.1:8000/user_email', {
-      email: session.user.email
-    })
-  } catch (err) {
-    console.error(err)
-  }
+const UserRoadmaps = ({ searchParams }) => {
+  const { email } = searchParams;
   const { roadmaps, deleteRoadmap } = useRoadmaps(email);
   const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
   if (!email) {
@@ -55,7 +49,6 @@ const UserRoadmaps = async () => {
     }
     return null; // Don't render the component
   }
-
   if (roadmaps === null) {
     return <Loading />;
   }
