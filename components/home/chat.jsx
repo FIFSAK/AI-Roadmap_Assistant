@@ -61,7 +61,7 @@ const useMessages = (email) => {
   // const lastResponse = useRef(''); 
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://localhost:8000/ws");
+    const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
     websocket.onopen = () => setWs(websocket);
     websocket.onclose = (event) => console.log('WebSocket closed', event);
     websocket.onerror = (error) => console.log('WebSocket error', error);

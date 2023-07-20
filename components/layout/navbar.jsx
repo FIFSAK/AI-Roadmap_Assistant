@@ -29,17 +29,21 @@ export default function NavBar({ session }) {
             <p>Road map Assistant</p>
           </Link>
           <div className="flex items-center">
-            <Link href="/majors" className="mr-4 text-black hover:underline">
-              List of Majors
-            </Link>
-            <Link href={`/my_roadmaps?email=${session?.user?.email}`} className="mr-4 text-black hover:underline">
-              My Roadmaps
-            </Link>
+            {session && (
+              <>
+                <Link href="/majors" className="mr-4 text-black hover:underline">
+                  List of Majors
+                </Link>
+                <Link href={`/my_roadmaps?email=${session.user.email}`} className="mr-4 text-black hover:underline">
+                  My Roadmaps
+                </Link>
+                <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
+                  Take a survey
+                </Link>
+              </>
+            )}
             <Link href="/" className="mr-4 text-black hover:underline">
               Home
-            </Link>
-            <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
-              Take a survey
             </Link>
             {session ? (
               <UserDropdown session={session} />

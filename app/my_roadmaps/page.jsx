@@ -1,7 +1,7 @@
 'use client'
 import axios from 'axios';
-import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
+import { useEffect, useState } from 'react';
 import Loading from './Loading';
 
 const useRoadmaps = (email) => {
@@ -39,10 +39,22 @@ const useRoadmaps = (email) => {
   return { roadmaps, deleteRoadmap };
 };
 
-const UserRoadmaps = ({ searchParams }) => {
-  const { email } = searchParams;
+const UserRoadmaps = async () => {
+  try {
+      const { email } = await axios.post('http://127.0.0.1:8000/user_email', {
+      email: session.user.email
+    })
+  } catch (err) {
+    console.error(err)
+  }
   const { roadmaps, deleteRoadmap } = useRoadmaps(email);
   const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
+  if (!email) {
+    if (typeof window !== 'undefined') {
+      window.location.href = "/"; // replace /login with your login page's path
+    }
+    return null; // Don't render the component
+  }
 
   if (roadmaps === null) {
     return <Loading />;
