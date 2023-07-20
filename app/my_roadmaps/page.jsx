@@ -10,7 +10,7 @@ const useRoadmaps = (email) => {
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        const res = await axios.get(`http://127.0.0.1:8000/user_roadmaps?email=${email}`);
+        const res = await axios.get(`https://roadmap-back-zntr.onrender.com/user_roadmaps?email=${email}`);
         if (res.status === 200) {
           setRoadmaps(res.data.roadmaps);
         } else {
@@ -43,12 +43,7 @@ const UserRoadmaps = ({ searchParams }) => {
   const { email } = searchParams;
   const { roadmaps, deleteRoadmap } = useRoadmaps(email);
   const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
-  if (!email) {
-    if (typeof window !== 'undefined') {
-      window.location.href = "/"; // replace /login with your login page's path
-    }
-    return null; // Don't render the component
-  }
+
   if (roadmaps === null) {
     return <Loading />;
   }
