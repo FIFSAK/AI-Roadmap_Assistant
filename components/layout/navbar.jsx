@@ -4,14 +4,25 @@ import useScroll from "@/lib/hooks/use-scroll";
 import Image from "next/image";
 import Link from "next/link";
 import { useSignInModal } from "./sign-in-modal";
-import UserDropdown from "./user-dropdown";
+import { useLoginModal } from "./login-modal";
+import axios from 'axios';
 
-export default function NavBar({ session }) {
+export default function NavBar() {
   const { SignInModal, setShowSignInModal } = useSignInModal();
+  const { LoginModal, setShowLoginModal } = useLoginModal();
   const scrolled = useScroll(50);
+
+  const isUserLoggedIn = Boolean(localStorage.getItem('jwt'));
+
+  const handleLogout = () => {
+    localStorage.removeItem('jwt');
+    axios.defaults.headers.common['Authorization'] = null;
+  };
+
   return (
     <>
       <SignInModal />
+      <LoginModal />
       <div
         className={`fixed top-0 w-full ${scrolled
           ? "border-b border-gray-200 bg-white/50 backdrop-blur-xl"
@@ -32,7 +43,7 @@ export default function NavBar({ session }) {
             <Link href="/majors" className="mr-4 text-black hover:underline">
               List of Majors
             </Link>
-            <Link href={`/my_roadmaps?email=${session?.user?.email}`} className="mr-4 text-black hover:underline">
+            <Link href="/my_roadmaps" className="mr-4 text-black hover:underline">
               My Roadmaps
             </Link>
             <Link href="/" className="mr-4 text-black hover:underline">
@@ -41,15 +52,31 @@ export default function NavBar({ session }) {
             <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
               Take a survey
             </Link>
-            {session ? (
-              <UserDropdown session={session} />
+            {isUserLoggedIn ? (
+              <button
+                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+                onClick={handleLogout}
+              >
+                Log Out
+              </button>
             ) : (
+              <>
               <button
                 className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
                 onClick={() => setShowSignInModal(true)}
+                // Rest of your button props
               >
-                Sign In
+                Sign Up
               </button>
+              <button
+                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+                onClick={() => setShowLoginModal(true)}
+                // Rest of your button props
+              >
+                Log In
+              </button>
+            </>
+          
             )}
           </div>
         </div>

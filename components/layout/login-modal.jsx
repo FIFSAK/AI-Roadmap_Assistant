@@ -1,3 +1,5 @@
+"use client";
+
 import {
   useState,
   useCallback,
@@ -7,9 +9,9 @@ import {
 import { Dialog, Transition } from '@headlessui/react'
 import axios from 'axios';
 
-const SignInModal = ({
-  showSignInModal,
-  setShowSignInModal,
+const LoginModal = ({
+  showLoginModal,
+  setShowLoginModal,
 }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,13 +26,13 @@ const SignInModal = ({
     };
 
     try {
-      const response = await axios.post('http://127.0.0.1:8000/user/signup', data);
+      const response = await axios.post('http://127.0.0.1:8000/user/login', data);
       if (response.data.error) {
         setError(response.data.error);
       } else {
         localStorage.setItem('jwt', response.data.jwt);
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.jwt;
-        setShowSignInModal(false);
+        setShowLoginModal(false);
         setEmail('');
         setPassword('');
       }
@@ -41,9 +43,9 @@ const SignInModal = ({
   };
 
   return (
-    <Transition appear show={showSignInModal} as={Fragment}>
-      <Dialog as="div" className="relative z-40" open={showSignInModal} onClose={() => setShowSignInModal(false)}>
-        <Transition.Child
+    <Transition appear show={showLoginModal} as={Fragment}>
+      <Dialog as="div" className="relative z-40" open={showLoginModal} onClose={() => setShowLoginModal(false)}>
+      <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -90,7 +92,7 @@ const SignInModal = ({
                       placeholder="Password"
                       required
                     />
-                     <button type="submit">Sign In</button>
+                     <button type="submit">log in</button>
                     </form>
                  </div>
               </Dialog.Panel>
@@ -102,20 +104,20 @@ const SignInModal = ({
   );
 };
 
-export function useSignInModal() {
-  const [showSignInModal, setShowSignInModal] = useState(false);
+export function useLoginModal() {
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
-  const SignInModalCallback = useCallback(() => {
+  const LoginModalCallback = useCallback(() => {
     return (
-      <SignInModal
-        showSignInModal={showSignInModal}
-        setShowSignInModal={setShowSignInModal}
+      <LoginModal
+        showLoginModal={showLoginModal}
+        setShowLoginModal={setShowLoginModal}
       />
     );
-  }, [showSignInModal, setShowSignInModal]);
+  }, [showLoginModal, setShowLoginModal]);
 
   return useMemo(
-    () => ({ setShowSignInModal, SignInModal: SignInModalCallback }),
-    [setShowSignInModal, SignInModalCallback],
+    () => ({ setShowLoginModal, LoginModal: LoginModalCallback }),
+    [setShowLoginModal, LoginModalCallback],
   );
 }

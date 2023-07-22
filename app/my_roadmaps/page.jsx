@@ -1,16 +1,21 @@
-'use client'
+'use client';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import Loading from './Loading';
 
-const useRoadmaps = (email) => {
+const useRoadmaps = () => {
   const [roadmaps, setRoadmaps] = useState(null);
 
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        const res = await axios.get(`https://roadmap-back-zntr.onrender.com/user_roadmaps?email=${email}`);
+        const jwt = localStorage.getItem('jwt');
+        const res = axios.get('http://127.0.0.1:8000/user_roadmaps', {
+          headers: {
+              'Authorization': `Bearer ${jwt}`
+          }
+      });
         if (res.status === 200) {
           setRoadmaps(res.data.roadmaps);
         } else {
@@ -21,11 +26,16 @@ const useRoadmaps = (email) => {
       }
     };
     fetchRoadmaps();
-  }, [email]);
+  }, []);
 
   const deleteRoadmap = async (index) => {
     try {
-      const res = await axios.delete(`https://roadmap-back-zntr.onrender.com/delete_roadmap?email=${email}&index=${index}`);
+      const jwt = localStorage.getItem('jwt');
+      const res = await axios.delete(`https://roadmap-back-zntr.onrender.com/delete_roadmap?index=${index}`, {
+        headers: {
+          'Authorization': `Bearer ${jwt}`
+        }
+      });
       if (res.status === 200) {
         setRoadmaps(prevRoadmaps => prevRoadmaps.filter((_, i) => i !== index));
       } else {
@@ -39,9 +49,8 @@ const useRoadmaps = (email) => {
   return { roadmaps, deleteRoadmap };
 };
 
-const UserRoadmaps = ({ searchParams }) => {
-  const { email } = searchParams;
-  const { roadmaps, deleteRoadmap } = useRoadmaps(email);
+const UserRoadmaps = () => {
+  const { roadmaps, deleteRoadmap } = useRoadmaps();
   const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
 
   if (roadmaps === null) {
@@ -80,8 +89,6 @@ const UserRoadmaps = ({ searchParams }) => {
   );
 };
 
-// Outside your component, declare these styles:
-
 const cardStyle = {
   backgroundColor: "white",
   borderRadius: "15px",
@@ -94,7 +101,7 @@ const titleRowStyle = {
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
-  marginBottom: "20px", // Move marginBottom here from titleStyle
+  marginBottom: "20px",
 };
 
 const titleStyle = {
@@ -109,13 +116,14 @@ const deleteButtonStyle = {
   borderRadius: "5px",
   padding: "5px 10px",
   cursor: "pointer",
-  alignSelf: "center", // Ensure the button aligns with the center of the title
+  alignSelf: "center",
   marginLeft: "20px",
 };
+
 const contentStyle = {
   color: "#4f4f4f",
   lineHeight: "1.5",
-  whiteSpace: "pre-wrap", // This will respect your '\n' new lines in the text
+  whiteSpace: "pre-wrap",
 };
 
 export default UserRoadmaps;
