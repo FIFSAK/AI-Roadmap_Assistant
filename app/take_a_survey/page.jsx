@@ -36,7 +36,6 @@ const SurveyPage = () => {
       return newResponses;
     });
   };
-
   const handleSubmit = async () => {
     const allQuestionsAnswered = responses.every(response => response !== '');
     if (!allQuestionsAnswered) {
@@ -44,10 +43,14 @@ const SurveyPage = () => {
       setShowModal(true);
       return;
     }
+  
+    const jwt = localStorage.getItem('jwt');
+
     const response = await fetch('http://127.0.0.1:8000/receive_answers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwt}` // Added this line
       },
       body: JSON.stringify({ answers: responses }),
     });

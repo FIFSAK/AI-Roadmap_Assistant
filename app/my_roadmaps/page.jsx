@@ -11,7 +11,7 @@ const useRoadmaps = () => {
     const fetchRoadmaps = async () => {
       try {
         const jwt = localStorage.getItem('jwt');
-        const res = axios.get('http://127.0.0.1:8000/user_roadmaps', {
+        const res = await axios.get('http://127.0.0.1:8000/user_roadmaps', {
           headers: {
               'Authorization': `Bearer ${jwt}`
           }
@@ -31,9 +31,12 @@ const useRoadmaps = () => {
   const deleteRoadmap = async (index) => {
     try {
       const jwt = localStorage.getItem('jwt');
-      const res = await axios.delete(`https://roadmap-back-zntr.onrender.com/delete_roadmap?index=${index}`, {
+      const res = await axios.delete('http://127.0.0.1:8000/delete_roadmap', {
         headers: {
           'Authorization': `Bearer ${jwt}`
+        },
+        data: {
+          index: index,
         }
       });
       if (res.status === 200) {
@@ -45,9 +48,10 @@ const useRoadmaps = () => {
       console.error('An error occurred:', error);
     }
   };
-
+  
   return { roadmaps, deleteRoadmap };
-};
+  };
+  
 
 const UserRoadmaps = () => {
   const { roadmaps, deleteRoadmap } = useRoadmaps();

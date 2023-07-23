@@ -54,26 +54,37 @@ const InputMessage = ({ input, setInput, sendMessage }) => {
   )
 }
 
-const useMessages = (email) => {
+const useMessages = () => {
   const [messages, setMessages] = useState(initialMessages);
-  const [ongoingMessage, setOngoingMessage] = useState(''); // Add this line
   const [ws, setWs] = useState(null); 
-  // const lastResponse = useRef(''); 
 
   useEffect(() => {
-    const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
-    websocket.onopen = () => setWs(websocket);
-    websocket.onclose = (event) => console.log('WebSocket closed', event);
-    websocket.onerror = (error) => console.log('WebSocket error', error);
-    websocket.onmessage = (event) => {
-      console.log('WebSocket message', event.data);
-        
-      // const newPart = event.data.slice(lastResponse.current.length);
-      // lastResponse.current = event.data; // Update the lastResponse ref
-      
-      setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: event.data }]);
+    const websocket = new WebSocket("ws://localhost:8000/ws");
+
+    websocket.onopen = () => {
+      setWs(websocket);
     };
-    return () => websocket.close();
+
+    websocket.onclose = (event) => {
+      console.log('WebSocket closed', event);
+    };
+
+    websocket.onerror = (error) => {
+      console.log('WebSocket error', error);
+    };
+
+    websocket.onmessage = async (event) => {
+      console.log('WebSocket message', event.data);      
+      try {
+        setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: event.data }]);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    return () => {
+      websocket.close();
+    };
   }, []);
 
   const sendMessage = async (newMessage) => {
@@ -87,18 +98,23 @@ const useMessages = (email) => {
     try {
       if (ws) {
         ws.send(newMessage);
-        // lastResponse.current = ''; // Also reset the lastResponse ref
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
   }
+
   const likeMessage = async (message) => {
     try {
-      await axios.post('https://roadmap-back-zntr.onrender.com/save_roadmap', {
-        roadmap: { roadmap: message },
-        email: { email: email }
-      })
+      await axios.post('http://127.0.0.1:8000/save_roadmap', 
+      { 
+        roadmap: message,
+      }, 
+      {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+        }
+      });
     } catch (err) {
       console.error(err)
     }
