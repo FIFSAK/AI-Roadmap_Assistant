@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import useScroll from "@/lib/hooks/use-scroll";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,10 +13,18 @@ export default function NavBar() {
   const { LoginModal, setShowLoginModal } = useLoginModal();
   const scrolled = useScroll(50);
 
-  const isUserLoggedIn = Boolean(localStorage.getItem('jwt'));
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsUserLoggedIn(Boolean(localStorage.getItem('jwt')));
+    }
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('jwt');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem('jwt');
+    }
     axios.defaults.headers.common['Authorization'] = null;
   };
 
