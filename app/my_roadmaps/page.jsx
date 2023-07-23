@@ -11,7 +11,7 @@ const useRoadmaps = () => {
     const fetchRoadmaps = async () => {
       try {
         const jwt = localStorage.getItem('jwt');
-        const res = await axios.get('http://127.0.0.1:8000/user_roadmaps', {
+        const res = await axios.get('https://roadmap-back-zntr.onrender.com/user_roadmaps', {
           headers: {
               'Authorization': `Bearer ${jwt}`
           }
@@ -31,7 +31,7 @@ const useRoadmaps = () => {
   const deleteRoadmap = async (index) => {
     try {
       const jwt = localStorage.getItem('jwt');
-      const res = await axios.delete('http://127.0.0.1:8000/delete_roadmap', {
+      const res = await axios.delete('https://roadmap-back-zntr.onrender.com/delete_roadmap', {
         headers: {
           'Authorization': `Bearer ${jwt}`
         },

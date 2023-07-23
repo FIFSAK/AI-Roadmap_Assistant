@@ -59,7 +59,7 @@ const useMessages = () => {
   const [ws, setWs] = useState(null); 
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://localhost:8000/ws");
+    const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
 
     websocket.onopen = () => {
       setWs(websocket);
@@ -106,7 +106,7 @@ const useMessages = () => {
 
   const likeMessage = async (message) => {
     try {
-      await axios.post('http://127.0.0.1:8000/save_roadmap', 
+      await axios.post('https://roadmap-back-zntr.onrender.com/save_roadmap', 
       { 
         roadmap: message,
       }, 

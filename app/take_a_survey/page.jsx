@@ -46,7 +46,7 @@ const SurveyPage = () => {
   
     const jwt = localStorage.getItem('jwt');
 
-    const response = await fetch('http://127.0.0.1:8000/receive_answers', {
+    const response = await fetch('https://roadmap-back-zntr.onrender.com/receive_answers', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
