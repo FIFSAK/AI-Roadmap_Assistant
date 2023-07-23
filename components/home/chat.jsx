@@ -9,7 +9,7 @@ import { ChatLine } from './chat-line';
 const initialMessages = [
   {
     role: 'assistant',
-    content: 'Hi! I am your Road Map Assistant.',
+    content: 'Hi! I am your Road Map Assistant. For whom to make a roadmap.',
   },
 ]
 
@@ -61,7 +61,7 @@ const useMessages = (email) => {
   // const lastResponse = useRef(''); 
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://localhost:8000/ws");
+    const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
     websocket.onopen = () => setWs(websocket);
     websocket.onclose = (event) => console.log('WebSocket closed', event);
     websocket.onerror = (error) => console.log('WebSocket error', error);
@@ -119,7 +119,7 @@ export default function Chat({ email }) {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-  }, [messages])
+  }, [messages])  
 
   return (
     <div className="flex-1 w-full border-zinc-100 overflow-hidden">

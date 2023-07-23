@@ -59,6 +59,7 @@ export default function NavBar() {
               >
                 Log Out
               </button>
+
             ) : (
               <>
               <button

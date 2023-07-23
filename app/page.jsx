@@ -22,4 +22,5 @@ export default function HomeClientComponent() {
   const isLoggedIn = useIsLoggedIn();
 
   return isLoggedIn ? <Chat /> : <Landing />;
+
 }
