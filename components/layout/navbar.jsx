@@ -49,44 +49,44 @@ export default function NavBar() {
             <p>Road map Assistant</p>
           </Link>
           <div className="flex items-center">
-            <Link href="/majors" className="mr-4 text-black hover:underline">
-              List of Majors
-            </Link>
-            <Link href="/my_roadmaps" className="mr-4 text-black hover:underline">
-              My Roadmaps
-            </Link>
-            <Link href="/" className="mr-4 text-black hover:underline">
-              Home
-            </Link>
-            <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
-              Take a survey
-            </Link>
-            {isUserLoggedIn ? (
-              <button
-                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
-                onClick={handleLogout}
-              >
-                Log Out
-              </button>
-
-            ) : (
+            {isUserLoggedIn && (
               <>
-              <button
-                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
-                onClick={() => setShowSignInModal(true)}
-                // Rest of your button props
-              >
-                Sign Up
-              </button>
-              <button
-                className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
-                onClick={() => setShowLoginModal(true)}
-                // Rest of your button props
-              >
-                Log In
-              </button>
-            </>
-          
+                <Link href="/majors" className="mr-4 text-black hover:underline">
+                  List of Majors
+                </Link>
+                <Link href="/my_roadmaps" className="mr-4 text-black hover:underline">
+                  My Roadmaps
+                </Link>
+                <Link href="/" className="mr-4 text-black hover:underline">
+                  Home
+                </Link>
+                <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
+                  Take a survey
+                </Link>
+                <button
+                  className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+                  onClick={handleLogout}
+                >
+                  Log Out
+                </button>
+              </>
+            )}
+
+            {!isUserLoggedIn && (
+              <>
+                <button
+                  className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+                  onClick={() => setShowSignInModal(true)}
+                >
+                  Sign Up
+                </button>
+                <button
+                  className="rounded-full border border-black bg-black p-1.5 px-4 text-sm text-white transition-all hover:bg-white hover:text-black"
+                  onClick={() => setShowLoginModal(true)}
+                >
+                  Log In
+                </button>
+              </>
             )}
           </div>
         </div>
