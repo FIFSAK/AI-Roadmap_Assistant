@@ -1,6 +1,6 @@
 'use client'
 import { redirect } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import majorsData from './majorsData.json';
 import s from './page.module.css';
 
