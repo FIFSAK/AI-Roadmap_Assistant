@@ -24,8 +24,8 @@ export default function NavBar() {
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem('jwt');
+      window.location.reload();
     }
-    axios.defaults.headers.common['Authorization'] = null;
   };
 
   return (

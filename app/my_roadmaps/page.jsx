@@ -3,17 +3,21 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import parse from 'html-react-parser';
 import Loading from './Loading';
+import { redirect } from 'next/navigation'
 
 const useRoadmaps = () => {
   const [roadmaps, setRoadmaps] = useState(null);
-
+  const jwt = localStorage.getItem('jwt');
+  if (!jwt) {
+    redirect('/')
+  }
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        const jwt = localStorage.getItem('jwt');
+        
         const res = await axios.get('https://roadmap-back-zntr.onrender.com/user_roadmaps', {
           headers: {
-              'Authorization': `Bearer ${jwt}`
+            'Authorization': `Bearer ${jwt}`
           }
       });
         if (res.status === 200) {

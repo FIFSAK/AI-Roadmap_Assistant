@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import majorsData from './majorsData.json';
 import s from './page.module.css';
+import { redirect } from 'next/navigation'
 
 const MajorsList = () => {
     const majors = Object.entries(majorsData);
@@ -27,6 +28,10 @@ const MajorsList = () => {
 
 
 const MajorsPage = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (!jwt) {
+        redirect('/')
+    }
     return <div className={s.cont}> <MajorsList /> </div>
 };
 

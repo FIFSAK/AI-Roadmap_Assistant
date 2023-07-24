@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react';
+import { redirect } from 'next/navigation'
 
 const questions = [
   "Do you enjoy solving complex mathematical problems?",
@@ -28,6 +29,10 @@ const SurveyPage = () => {
   const [responses, setResponses] = useState(Array(questions.length).fill(''));
   const [modalText, setModalText] = useState('');
   const [showModal, setShowModal] = useState(false); 
+  const jwt = localStorage.getItem('jwt');
+  if (!jwt) {
+    redirect('/')
+  }
 
   const handleResponseChange = (index, response) => {
     setResponses(prevResponses => {
@@ -44,7 +49,6 @@ const SurveyPage = () => {
       return;
     }
   
-    const jwt = localStorage.getItem('jwt');
 
     const response = await fetch('https://roadmap-back-zntr.onrender.com/receive_answers', {
       method: 'POST',

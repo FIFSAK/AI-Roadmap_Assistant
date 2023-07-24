@@ -73,7 +73,7 @@ const SignInModal = ({
 
                 <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16">
                   <form onSubmit={handleSubmit}>
-                      {error && <p>{error}</p>}
+                    {error && <p className="text-red-500">{error}</p>}
                     <input
                       type="email"
                       name="email"
@@ -81,6 +81,7 @@ const SignInModal = ({
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Email"
                       required
+                      className="p-3 w-full rounded-md border-2 border-gray-300 outline-none focus:border-indigo-500"
                     />
                     <input
                       type="password"
@@ -89,10 +90,16 @@ const SignInModal = ({
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Password"
                       required
+                      className="p-3 w-full rounded-md border-2 border-gray-300 outline-none focus:border-indigo-500"
                     />
-                     <button type="submit">Sign In</button>
-                    </form>
-                 </div>
+                    <button 
+                      type="submit" 
+                      className="bg-indigo-500 text-white w-full p-3 rounded-md hover:bg-indigo-600 transition-all"
+                    >
+                      Sign In
+                    </button>
+                  </form>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

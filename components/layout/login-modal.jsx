@@ -1,5 +1,3 @@
-"use client";
-
 import {
   useState,
   useCallback,
@@ -35,6 +33,7 @@ const LoginModal = ({
         setShowLoginModal(false);
         setEmail('');
         setPassword('');
+        window.location.reload();
       }
 
     } catch (error) {
@@ -45,7 +44,7 @@ const LoginModal = ({
   return (
     <Transition appear show={showLoginModal} as={Fragment}>
       <Dialog as="div" className="relative z-40" open={showLoginModal} onClose={() => setShowLoginModal(false)}>
-      <Transition.Child
+        <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -75,7 +74,7 @@ const LoginModal = ({
 
                 <div className="flex flex-col space-y-4 bg-gray-50 px-4 py-8 md:px-16">
                   <form onSubmit={handleSubmit}>
-                      {error && <p>{error}</p>}
+                    {error && <p className="text-red-500">{error}</p>}
                     <input
                       type="email"
                       name="email"
@@ -83,6 +82,7 @@ const LoginModal = ({
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Email"
                       required
+                      className="p-3 w-full rounded-md border-2 border-gray-300 outline-none focus:border-indigo-500"
                     />
                     <input
                       type="password"
@@ -91,10 +91,16 @@ const LoginModal = ({
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="Password"
                       required
+                      className="p-3 w-full rounded-md border-2 border-gray-300 outline-none focus:border-indigo-500"
                     />
-                     <button type="submit">log in</button>
-                    </form>
-                 </div>
+                    <button 
+                      type="submit" 
+                      className="bg-indigo-500 text-white w-full p-3 rounded-md hover:bg-indigo-600 transition-all"
+                    >
+                      Log in
+                    </button>
+                  </form>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>
