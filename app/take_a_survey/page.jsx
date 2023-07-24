@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { redirect } from 'next/navigation'
 
 const questions = [
@@ -29,11 +29,14 @@ const SurveyPage = () => {
   const [responses, setResponses] = useState(Array(questions.length).fill(''));
   const [modalText, setModalText] = useState('');
   const [showModal, setShowModal] = useState(false); 
-  const jwt = localStorage.getItem('jwt');
-  if (!jwt) {
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsUserLoggedIn(Boolean(localStorage.getItem('jwt')));
+    }
+  }, []);
+  if (!isUserLoggedIn) {
     redirect('/')
   }
-
   const handleResponseChange = (index, response) => {
     setResponses(prevResponses => {
       const newResponses = [...prevResponses];
@@ -48,8 +51,9 @@ const SurveyPage = () => {
       setShowModal(true);
       return;
     }
-  
-
+    
+    
+    const jwt = localStorage.getItem('jwt');
     const response = await fetch('https://roadmap-back-zntr.onrender.com/receive_answers', {
       method: 'POST',
       headers: {
