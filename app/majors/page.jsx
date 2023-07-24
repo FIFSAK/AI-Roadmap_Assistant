@@ -28,10 +28,6 @@ const MajorsList = () => {
 
 
 const MajorsPage = () => {
-    const jwt = localStorage.getItem('jwt');
-    if (!jwt) {
-        redirect('/')
-    }
     return <div className={s.cont}> <MajorsList /> </div>
 };
 
