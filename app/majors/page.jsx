@@ -28,8 +28,8 @@ const MajorsList = () => {
 
 
 const MajorsPage = () => {
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
+    console.log(localStorage.getItem('jwt'))
     useEffect(() => {
         if (typeof window !== "undefined") {
             setIsUserLoggedIn(Boolean(localStorage.getItem('jwt')));

@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation'
 
 const useRoadmaps = () => {
   const [roadmaps, setRoadmaps] = useState(null);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsUserLoggedIn(Boolean(localStorage.getItem('jwt')));

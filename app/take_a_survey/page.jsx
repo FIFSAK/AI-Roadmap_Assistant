@@ -29,7 +29,7 @@ const SurveyPage = () => {
   const [responses, setResponses] = useState(Array(questions.length).fill(''));
   const [modalText, setModalText] = useState('');
   const [showModal, setShowModal] = useState(false); 
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(true);
   useEffect(() => {
     if (typeof window !== "undefined") {
       setIsUserLoggedIn(Boolean(localStorage.getItem('jwt')));
