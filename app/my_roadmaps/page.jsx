@@ -7,14 +7,19 @@ import { redirect } from 'next/navigation'
 
 const useRoadmaps = () => {
   const [roadmaps, setRoadmaps] = useState(null);
-  const jwt = localStorage.getItem('jwt');
-  if (!jwt) {
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setIsUserLoggedIn(Boolean(localStorage.getItem('jwt')));
+    }
+  }, []);
+  if (!isUserLoggedIn) {
     redirect('/')
   }
   useEffect(() => {
     const fetchRoadmaps = async () => {
       try {
-        
+        const jwt = localStorage.getItem('jwt');
         const res = await axios.get('https://roadmap-back-zntr.onrender.com/user_roadmaps', {
           headers: {
             'Authorization': `Bearer ${jwt}`
