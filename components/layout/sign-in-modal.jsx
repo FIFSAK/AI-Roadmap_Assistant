@@ -33,6 +33,7 @@ const SignInModal = ({
         setShowSignInModal(false);
         setEmail('');
         setPassword('');
+        window.location.reload();
       }
 
     } catch (error) {
