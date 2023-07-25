@@ -76,7 +76,7 @@ const useRoadmaps = () => {
   
     const formatRoadmapText = (text) => {
       const formattedText = text.replace(/\n/g, '<br />')
-        .replace(/(http:\/\/|https:\/\/|www\.)[\w.-]+(\.[\w.-]+)+([\w.,@?^=%&:;\/~+#-]*[\w@?^=%&\/~+#-])?/g, '<a href="$&" target="_blank" rel="noopener noreferrer">$&</a>');
+        .replace(/(http:\/\/|https:\/\/|www\.)[\w.-]+(\.[\w.-]+)+([\w.,@?^=%&:;\/~+#-]*[\w@?^=%&\/~+#-])?/g, '<a href="$&" style="color:black; font-weight:640;" target="_blank" rel="noopener noreferrer">$&</a>');
       return { __html: formattedText };
     };
   
