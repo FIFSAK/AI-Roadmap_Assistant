@@ -24,7 +24,7 @@ const LoginModal = ({
     };
 
     try {
-      const response = await axios.post('https://roadmap-back-zntr.onrender.com/user/login', data);
+      const response = await axios.post('http://127.0.0.1:8000/user/login', data);
       if (response.data.error) {
         setError(response.data.error);
       } else {
