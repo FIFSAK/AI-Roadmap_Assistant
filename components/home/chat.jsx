@@ -9,7 +9,7 @@ import { ChatLine } from './chat-line';
 const initialMessages = [
   {
     role: 'assistant',
-    content: 'Hi! I am your Road Map Assistant. For whom to make a roadmap.',
+    content: "Hello there! I'm your Personal IT Roadmap Assistant.I'm here to help you navigate the exciting world of IT. I can make a roadmap for beginners or based on your existing experience. if you have not decided on a profession, go to the page list of majors or take a survey",
   },
 ]
 
