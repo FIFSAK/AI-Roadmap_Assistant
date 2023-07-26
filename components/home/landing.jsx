@@ -26,7 +26,7 @@ export default function Landing() {
           style={{ animationDelay: "0.25s", animationFillMode: "forwards" }}
         >
           <Link to="about-section" smooth={true} className="mt-16">
-            <Image src="/down-arrow.png" alt='arrow' className="w-12 h-12" />
+            <Image src="/down-arrow.png" alt='arrow' width="60" height="60"/>
           </Link>
         </div>
       </div>
@@ -42,7 +42,7 @@ export default function Landing() {
           </div>
         </Fade>
         <Link to="founder-section" smooth={true} className="mt-16">
-          <Image src="/down-arrow.png" alt='arrow' className="w-12 h-12" />
+          <Image src="/down-arrow.png" alt='arrow' width="60" height="60"/>
         </Link>
       </div>
       <div id="founder-section" className="flex items-center mt-60">
@@ -53,7 +53,7 @@ export default function Landing() {
               The concept for this project was born out of my own struggle to find a structured roadmap when I was just starting out in IT. I wanted to build something that would not only guide aspiring professionals on their IT journey, but also provide resources to help them develop and grow in their careers.<br />
               <br />
               I truly believe that technology can empower us and transform the world we live in. If you like this project and share the same belief, you can donate to support it. Your donation will go towards making this platform even better and reaching more people in need of guidance.<br /> <br /> (Kaspi 87472729558)<br /> <br /> <br />  </h2>
-            <Image src="/60111.jpg" alt='founder' className="rounded-full w-72 h-72 object-cover mr-40" />
+            <Image src="/60111.jpg" alt='founder' width="288" height="288" className="rounded-fullobject-cover mr-40" />
             <Donators className="w-1/3 items-right " donators={donators} />
           </div>
         </Fade>
