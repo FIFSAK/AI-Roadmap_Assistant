@@ -75,7 +75,7 @@ const convertNewLines = (text) =>
   
           {role === 'assistant' && (
             <button onClick={handleLike} style={liked ? buttonStyleLiked : buttonStyle} className={`like-button ${liked ? 'liked' : ''}`}>
-              Like
+              Save
             </button>
           )}
   
