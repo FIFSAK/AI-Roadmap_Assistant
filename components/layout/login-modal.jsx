@@ -1,22 +1,16 @@
-import {
-  useState,
-  useCallback,
-  useMemo,
-  Fragment
-} from "react";
-import { Dialog, Transition } from '@headlessui/react'
+import React, { useState, useCallback, useMemo, Fragment } from "react";
+import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 
-const LoginModal = ({
-  showLoginModal,
-  setShowLoginModal,
-}) => {
+const LoginModal = ({ showLoginModal, setShowLoginModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false); // New loading state variable
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const data = {
       email,
@@ -25,6 +19,7 @@ const LoginModal = ({
 
     try {
       const response = await axios.post('https://roadmap-back-zntr.onrender.com/user/login', data);
+      setLoading(false);
       if (response.data.error) {
         setError(response.data.error);
       } else {
@@ -37,6 +32,7 @@ const LoginModal = ({
       }
 
     } catch (error) {
+      setLoading(false);
       console.log('Error:', error);
     }
   };
@@ -93,11 +89,14 @@ const LoginModal = ({
                       required
                       className="p-3 w-full rounded-md border-2 border-gray-300 outline-none focus:border-indigo-500"
                     />
-                    <button 
+                     <button 
                       type="submit" 
-                      className="bg-indigo-500 text-white w-full p-3 rounded-md hover:bg-indigo-600 transition-all"
+                      disabled={loading}
+                      className={`bg-indigo-500 text-white w-full p-3 rounded-md hover:bg-indigo-600 transition-all ${loading ? 'opacity-50' : ''}`}
                     >
-                      Log in
+                      {loading ? 'Loading...' : 'Sign In'}
+                      {/* ASCII spinner */}
+                      {loading && <span className="animate-spin ml-2">|</span>}
                     </button>
                   </form>
                 </div>

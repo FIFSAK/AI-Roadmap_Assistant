@@ -1,22 +1,16 @@
-import {
-  useState,
-  useCallback,
-  useMemo,
-  Fragment
-} from "react";
-import { Dialog, Transition } from '@headlessui/react'
+import React, { useState, useCallback, useMemo, Fragment } from "react";
+import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 
-const SignInModal = ({
-  showSignInModal,
-  setShowSignInModal,
-}) => {
+const SignInModal = ({ showSignInModal, setShowSignInModal }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const data = {
       email,
@@ -25,6 +19,7 @@ const SignInModal = ({
 
     try {
       const response = await axios.post('https://roadmap-back-zntr.onrender.com/user/signup', data);
+      setLoading(false);
       if (response.data.error) {
         setError(response.data.error);
       } else {
@@ -37,10 +32,11 @@ const SignInModal = ({
       }
 
     } catch (error) {
+      setLoading(false);
       console.log('Error:', error);
     }
   };
-
+  
   return (
     <Transition appear show={showSignInModal} as={Fragment}>
       <Dialog as="div" className="relative z-40" open={showSignInModal} onClose={() => setShowSignInModal(false)}>
@@ -95,9 +91,12 @@ const SignInModal = ({
                     />
                     <button 
                       type="submit" 
-                      className="bg-indigo-500 text-white w-full p-3 rounded-md hover:bg-indigo-600 transition-all"
+                      disabled={loading}
+                      className={`bg-indigo-500 text-white w-full p-3 rounded-md hover:bg-indigo-600 transition-all ${loading ? 'opacity-50' : ''}`}
                     >
-                      Sign In
+                      {loading ? 'Loading...' : 'Sign In'}
+                      {/* ASCII spinner */}
+                      {loading && <span className="animate-spin ml-2">|</span>}
                     </button>
                   </form>
                 </div>
