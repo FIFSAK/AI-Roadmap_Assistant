@@ -24,6 +24,7 @@ export default function NavBar() {
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem('jwt');
+      localStorage.removeItem('chatMessages');
       window.location.reload();
     }
   };

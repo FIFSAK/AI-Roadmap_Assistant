@@ -55,7 +55,10 @@ const InputMessage = ({ input, setInput, sendMessage }) => {
 }
 
 const useMessages = () => {
-  const [messages, setMessages] = useState(initialMessages);
+  const [messages, setMessages] = useState(() => {
+    const storedMessages = localStorage.getItem('chatMessages');
+    return storedMessages ? JSON.parse(storedMessages) : initialMessages;
+  });
   const [ws, setWs] = useState(null); 
 
   useEffect(() => {
@@ -119,7 +122,9 @@ const useMessages = () => {
       console.error(err)
     }
   }
-
+  useEffect(() => {
+    localStorage.setItem('chatMessages', JSON.stringify(messages));
+  }, [messages]);
   return {
     messages,
     sendMessage,
@@ -127,10 +132,10 @@ const useMessages = () => {
   }
 }
 
-export default function Chat({ email }) {
-  console.log(email);
+
+export default function Chat() {
   const [input, setInput] = useState('')
-  const { messages, sendMessage, likeMessage } = useMessages(email)
+  const { messages, sendMessage, likeMessage } = useMessages()
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
