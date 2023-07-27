@@ -59,55 +59,59 @@ const useRoadmaps = () => {
   };
   
   return { roadmaps, deleteRoadmap };
-  };
-  
+};
 
-  const UserRoadmaps = () => {
-    const { roadmaps, deleteRoadmap } = useRoadmaps();
-    const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
-  
-    if (roadmaps === null) {
-      return <Loading />;
-    }
-  
-    if (!roadmaps || roadmaps.length === 0) {
-      return <p>No roadmaps found</p>;
-    }
-  
-    const formatRoadmapText = (text) => {
-      const formattedText = text.replace(/\n/g, '<br />')
-        .replace(/(http:\/\/|https:\/\/|www\.)[\w.-]+(\.[\w.-]+)+([\w.,@?^=%&:;\/~+#-]*[\w@?^=%&\/~+#-])?/g, '<a href="$&" style="color:black; font-weight:640;" target="_blank" rel="noopener noreferrer">$&</a>');
-      return { __html: formattedText };
-    };
-  
-    const getFirstLine = (text) => {
-      const lines = text.split('\n');
-      const firstLine = lines[0] || 'Roadmap';
-      return firstLine.length > 61 ? firstLine.slice(0, 61) + '...' : firstLine;
-    };
-  
-    const showRoadmap = (index) => {
-      setShownRoadmapIndex(index === shownRoadmapIndex ? null : index);
-    };
-  
-    return (
-      <div style={{ padding: "50px", backgroundColor: "#f3f3f3", minHeight: "100vh" }}>
-        <h1 style={{ textAlign: "center", color: "#4f4f4f", marginBottom: "50px" }}>User Roadmaps</h1>
-        {roadmaps.map((roadmap, index) => (
-          <div style={cardStyle} key={index}>
-            <div style={titleRowStyle}>
-              <h2 style={titleStyle} onClick={() => showRoadmap(index)}>
-                {getFirstLine(roadmap)}
-              </h2>
-              <button style={deleteButtonStyle} onClick={() => deleteRoadmap(index)}>Delete</button>
-            </div>
-            {shownRoadmapIndex === index && <p style={contentStyle}>{parse(formatRoadmapText(roadmap).__html)}</p>}
+const UserRoadmaps = () => {
+  const { roadmaps, deleteRoadmap } = useRoadmaps();
+  const [shownRoadmapIndex, setShownRoadmapIndex] = useState(null);
+
+  if (roadmaps === null) {
+    return <Loading />;
+  }
+
+  if (!roadmaps || roadmaps.length === 0) {
+    return <p>No roadmaps found</p>;
+  }
+
+  const formatRoadmapText = (roadmapObj) => {
+    const formattedText = roadmapObj.roadmap.replace(/\n/g, '<br />')
+      .replace(/(http:\/\/|https:\/\/|www\.)[\w.-]+(\.[\w.-]+)+([\w.,@?^=%&:;\/~+#-]*[\w@?^=%&\/~+#-])?/g, '<a href="$&" style="color:black; font-weight:640;" target="_blank" rel="noopener noreferrer">$&</a>');
+    return { __html: formattedText };
+  };
+
+  const getFirstLine = (roadmapObj) => {
+    const lines = roadmapObj.roadmap.split('\n');
+    const firstLine = lines[0] || 'Roadmap';
+    return firstLine.length > 61 ? firstLine.slice(0, 61) + '...' : firstLine;
+  };
+
+  const showRoadmap = (index) => {
+    setShownRoadmapIndex(index === shownRoadmapIndex ? null : index);
+  };
+
+  return (
+    <div style={{ padding: "50px", backgroundColor: "#f3f3f3", minHeight: "100vh" }}>
+      <h1 style={{ textAlign: "center", color: "#4f4f4f", marginBottom: "50px" }}>User Roadmaps</h1>
+      {roadmaps.map((roadmapObj, index) => (
+        <div style={cardStyle} key={index}>
+          <div style={titleRowStyle}>
+          <h2 style={titleStyle} onClick={() => showRoadmap(index)}>
+            {getFirstLine(roadmapObj)}
+          </h2>
+          <p style={createdDateStyle}>Created at: {roadmapObj.created_at}</p>
+          <button style={deleteButtonStyle} onClick={() => deleteRoadmap(index)}>Delete</button>
           </div>
-        ))}
-      </div>
-    );
-  };
+          {shownRoadmapIndex === index && <p style={contentStyle}>{parse(formatRoadmapText(roadmapObj).__html)}</p>}
+        </div>
+      ))}
+    </div>
+  );
+};
 
+const createdDateStyle = {
+  fontSize: '0.8em',
+  color: 'gray'
+};
 const cardStyle = {
   backgroundColor: "white",
   borderRadius: "15px",
