@@ -104,7 +104,6 @@ const SurveyPage = () => {
       {showModal && 
         <div style={{ position: "fixed", top: 0, left: 0, width: "100%", height: "100%", backgroundColor: "rgba(0,0,0,0.5)", display: "flex", justifyContent: "center", alignItems: "center" }}>
           <div style={{ backgroundColor: "white", padding: "20px", borderRadius: "5px", width: "80%", maxWidth: "500px" }}>
-            <h2>Message:</h2>
             <p>{modalText}</p>
             <button onClick={() => setShowModal(false)} style={{ display: "block", margin: "20px auto", padding: "10px 20px", background: "#007BFF", color: "#fff", border: "none", borderRadius: "5px", cursor: "pointer" }}>
               Close
