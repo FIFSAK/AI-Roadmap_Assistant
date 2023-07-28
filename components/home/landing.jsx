@@ -6,11 +6,11 @@ import Image from "next/image";
 
 export default function Landing() {
   const donators = [
-    { name: 'John Doe', amount: '$500' },
-    { name: 'Jane Smith', amount: '$400' },
-    { name: 'Bob Johnson', amount: '$300' },
-    { name: 'Alice Williams', amount: '$200' },
-    { name: 'Charlie Brown', amount: '$100' }
+    // { name: 'John Doe', amount: '$500' },
+    // { name: 'Jane Smith', amount: '$400' },
+    // { name: 'Bob Johnson', amount: '$300' },
+    // { name: 'Alice Williams', amount: '$200' },
+    // { name: 'Charlie Brown', amount: '$100' }
   ];
   return (
     <>
