@@ -5,8 +5,6 @@ import { useEffect, useRef, useState } from 'react';
 import './blur.css';
 import { ChatLine } from './chat-line';
 
-
-
 const initialMessages = [
   {
     role: 'assistant',
@@ -60,20 +58,35 @@ const useMessages = () => {
     return storedMessages ? JSON.parse(storedMessages) : initialMessages;
   });
   const [ws, setWs] = useState(null);
+  const [wsLinks, setWsLinks] = useState(null);
+  const [links, setLinks] = useState('');
 
   useEffect(() => {
     const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
+    const websocketLinks = new WebSocket("ws://localhost:8000/links");
 
     websocket.onopen = () => {
       setWs(websocket);
+    };
+
+    websocketLinks.onopen = () => {
+      setWsLinks(websocketLinks);
     };
 
     websocket.onclose = (event) => {
       console.log('WebSocket closed', event);
     };
 
+    websocketLinks.onclose = (event) => {
+      console.log('WebSocket Links closed', event);
+    };
+
     websocket.onerror = (error) => {
       console.log('WebSocket error', error);
+    };
+
+    websocketLinks.onerror = (error) => {
+      console.log('WebSocket Links error', error);
     };
 
     websocket.onmessage = async (event) => {
@@ -85,8 +98,18 @@ const useMessages = () => {
       }
     };
 
+    websocketLinks.onmessage = async (event) => {
+      console.log('WebSocket Links message', event.data);
+      try {
+        setLinks(event.data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
     return () => {
       websocket.close();
+      websocketLinks.close();
     };
   }, []);
 
@@ -124,21 +147,20 @@ const useMessages = () => {
   }
   const handleGetLinks = async () => {
   try {
-    const res = await axios.post('https://roadmap-back-zntr.onrender.com/create_links', { roadmap: messages[messages.length - 1].content });
-
-    setMessages(oldMessages => {
-      const newMessages = [...oldMessages];
-      const lastMessage = newMessages[newMessages.length - 1];
-      // Create a new message object with the updated content
-      const updatedMessage = { ...lastMessage, content: lastMessage.content + "\n" + res.data };
-      // Replace the last message with the updated message
-      newMessages[newMessages.length - 1] = updatedMessage;
-      return newMessages;
-    });
+    if (wsLinks) {
+      wsLinks.send(messages[messages.length - 1].content);
+    }
   } catch (err) {
     console.error(err);
   }
 };
+
+useEffect(() => {
+  if (links) {
+    setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: messages[messages.length - 1].content + "\n" + links }]);
+    setLinks('');
+  }
+}, [links]);
   
   
   useEffect(() => {
