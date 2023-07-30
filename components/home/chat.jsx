@@ -101,7 +101,7 @@ const useMessages = () => {
     websocketLinks.onmessage = async (event) => {
       console.log('WebSocket Links message', event.data);
       try {
-        setLinks(event.data);
+        setLinks(old => [...old.slice(0, -1), { role: 'assistant', content: event.data }]);
       } catch (err) {
         console.error(err);
       }
@@ -129,7 +129,16 @@ const useMessages = () => {
       console.error(err);
     }
   }
-
+  
+  const handleGetLinks = async () => {
+  try {
+    if (wsLinks) {
+      wsLinks.send(messages[messages.length - 1].content);
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
   const likeMessage = async (message) => {
     try {
       await axios.post('https://roadmap-back-zntr.onrender.com/save_roadmap',
@@ -145,15 +154,6 @@ const useMessages = () => {
       console.error(err)
     }
   }
-  const handleGetLinks = async () => {
-  try {
-    if (wsLinks) {
-      wsLinks.send(messages[messages.length - 1].content);
-    }
-  } catch (err) {
-    console.error(err);
-  }
-};
 
 useEffect(() => {
   if (links) {
