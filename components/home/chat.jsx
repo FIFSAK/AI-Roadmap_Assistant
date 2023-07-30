@@ -63,7 +63,7 @@ const useMessages = () => {
 
   useEffect(() => {
     const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
-    const websocketLinks = new WebSocket("ws://roadmap-back-zntr.onrender.com/links");
+    const websocketLinks = new WebSocket("wss://roadmap-back-zntr.onrender.com/links");
 
     websocket.onopen = () => {
       setWs(websocket);
