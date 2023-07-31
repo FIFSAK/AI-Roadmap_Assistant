@@ -64,7 +64,7 @@ const useMessages = () => {
 
   useEffect(() => {
     const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
-    const websocketLinks = new WebSocket("wss://roadmap-back-zntr.onrender.com/links");
+    const websocketLinks = new WebSocket("ws://localhost:8000/links");
 
     websocket.onopen = () => {
       setWs(websocket);
@@ -183,8 +183,10 @@ export default function Chat() {
   const [input, setInput] = useState('')
   const { messages, sendMessage, likeMessage, handleGetLinks, isRoadmapCreated } = useMessages()
   const messagesEndRef = useRef(null)
-  const [isInstructionVisible, setIsInstructionVisible] = useState(true);
-
+  const [isInstructionVisible, setIsInstructionVisible] = useState(() => {
+    const storedMessages = localStorage.getItem('chatMessages');
+    return storedMessages ? false : true;
+  });
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
@@ -226,4 +228,3 @@ export default function Chat() {
     </div>
   )
 }
-
