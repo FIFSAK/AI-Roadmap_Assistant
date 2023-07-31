@@ -11,8 +11,20 @@ import { ChatLine } from './chat-line';
 //     content: "Hello there! I'm your Personal IT Roadmap Assistant.I'm here to help you navigate the exciting world of IT. I can make a roadmap for beginners or based on your existing experience. if you have not decided on a profession, go to the page list of majors or take a survey",
 //   },
 // ]
+const ClearChatButton = ({ clearChat, rightOffset = 8, bottomOffset = 0 }) => {
+  return (
+    <button
+      className="fixed w-32 mx-auto rounded-full p-1 bg-gray-500 text-white font-bold hover:bg-gray-700 transition-colors"
+      style={{ right: `${rightOffset}px`, bottom: `${bottomOffset}px` }} // Apply the offsets here
+      type="button"
+      onClick={clearChat}
+    >
+      Clear Chat
+    </button>
+  );
+};
 
-const InputMessage = ({ input, setInput, sendMessage }) => {
+const InputMessage = ({ input, setInput, sendMessage, clearChat }) => {
   const inputRef = useRef(null)
   const handleSendMessage = () => {
     sendMessage(input)
@@ -21,6 +33,7 @@ const InputMessage = ({ input, setInput, sendMessage }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both">
+      <ClearChatButton clearChat={clearChat} />
       <div className="mx-2 my-4 flex-1 w-full md:mx-4 md:mb-[52px] lg:max-w-2xl xl:max-w-3xl">
         <div className="relative mx-2 flex-1 flex-col rounded-md border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
           <input
@@ -63,7 +76,7 @@ const useMessages = () => {
   const [links, setLinks] = useState('');
 
   useEffect(() => {
-    const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
+    const websocket = new WebSocket("ws://localhost:8000/ws");
     const websocketLinks = new WebSocket("ws://localhost:8000/links");
 
     websocket.onopen = () => {
@@ -169,19 +182,25 @@ useEffect(() => {
   useEffect(() => {
     localStorage.setItem('chatMessages', JSON.stringify(messages));
   }, [messages]);
+  const clearChat = () => {
+    setMessages([]);
+    localStorage.removeItem('chatMessages');
+    window.location.reload(); // you may want to find a way to reset the state without reloading the page
+  }
   return {
     messages,
     sendMessage,
     likeMessage,
     handleGetLinks,
-    isRoadmapCreated
+    isRoadmapCreated,
+    clearChat
   }
 }
 
 
 export default function Chat() {
   const [input, setInput] = useState('')
-  const { messages, sendMessage, likeMessage, handleGetLinks, isRoadmapCreated } = useMessages()
+  const { messages, sendMessage, likeMessage, handleGetLinks, isRoadmapCreated, clearChat } = useMessages()
   const messagesEndRef = useRef(null)
   const [isInstructionVisible, setIsInstructionVisible] = useState(() => {
     const storedMessages = localStorage.getItem('chatMessages');
@@ -224,7 +243,10 @@ export default function Chat() {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <InputMessage input={input} setInput={setInput} sendMessage={handleSendMessage} />
-    </div>
+      <div style={{ position: 'relative' }}>
+        <ClearChatButton clearChat={clearChat} rightOffset={20} bottomOffset={20} />
+      </div>
+      <InputMessage input={input} setInput={setInput} sendMessage={handleSendMessage} clearChat={clearChat} />
+    </div> 
   )
 }
