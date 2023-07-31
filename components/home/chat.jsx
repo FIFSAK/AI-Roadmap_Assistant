@@ -159,7 +159,7 @@ const useMessages = () => {
 
 useEffect(() => {
   if (links) {
-    setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: messages[messages.length - 1].content + "\n" + links }]);
+    setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: messages[messages.length - 1].content + links }]);
     setLinks('');
     setIsRoadmapCreated(false);
   }
