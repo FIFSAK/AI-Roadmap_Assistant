@@ -33,14 +33,13 @@ const InputMessage = ({ input, setInput, sendMessage, clearChat }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both">
-      <ClearChatButton clearChat={clearChat} />
       <div className="mx-2 my-4 flex-1 w-full md:mx-4 md:mb-[52px] lg:max-w-2xl xl:max-w-3xl">
-        <div className="relative mx-2 flex-1 flex-col rounded-md border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
+        <div className="relative mx-2 flex flex-row justify-between items-center rounded-md border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
           <input
             ref={inputRef}
             aria-label="chat input"
             required
-            className="m-0 w-full border-0 bg-transparent p-0 py-3 pl-4 pr-12 text-black"
+            className="m-0 flex-grow border-0 bg-transparent p-0 py-3 pl-4 text-black"
             placeholder="Type a message..."
             value={input}
             onKeyDown={(e) => {
@@ -52,13 +51,16 @@ const InputMessage = ({ input, setInput, sendMessage, clearChat }) => {
               setInput(e.target.value)
             }}
           />
-          <button
-            className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 transition-colors"
-            type="submit"
-            onClick={handleSendMessage}
-          >
-            Send
-          </button>
+          <div className="flex flex-row items-center space-x-4">
+            <button
+              className="rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 transition-colors"
+              type="submit"
+              onClick={handleSendMessage}
+            >
+              Send
+            </button>
+            <ClearChatButton clearChat={clearChat} rightOffset={450} bottomOffset={60} />
+          </div>
         </div>
       </div>
     </div>
@@ -145,14 +147,14 @@ const useMessages = () => {
     }
   }
   const handleGetLinks = async () => {
-  try {
-    if (wsLinks) {
-      wsLinks.send(messages[messages.length - 1].content);
+    try {
+      if (wsLinks) {
+        wsLinks.send(messages[messages.length - 1].content);
+      }
+    } catch (err) {
+      console.error(err);
     }
-  } catch (err) {
-    console.error(err);
-  }
-};
+  };
 
   const likeMessage = async (message) => {
     try {
@@ -170,15 +172,15 @@ const useMessages = () => {
     }
   }
 
-useEffect(() => {
-  if (links) {
-    setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: messages[messages.length - 1].content + links }]);
-    setLinks('');
-    setIsRoadmapCreated(false);
-  }
-}, [links]);
-  
-  
+  useEffect(() => {
+    if (links) {
+      setMessages(old => [...old.slice(0, -1), { role: 'assistant', content: messages[messages.length - 1].content + links }]);
+      setLinks('');
+      setIsRoadmapCreated(false);
+    }
+  }, [links]);
+
+
   useEffect(() => {
     localStorage.setItem('chatMessages', JSON.stringify(messages));
   }, [messages]);
@@ -243,10 +245,8 @@ export default function Chat() {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <div style={{ position: 'relative' }}>
-        <ClearChatButton clearChat={clearChat} rightOffset={20} bottomOffset={20} />
-      </div>
+      <ClearChatButton clearChat={clearChat}/>
       <InputMessage input={input} setInput={setInput} sendMessage={handleSendMessage} clearChat={clearChat} />
-    </div> 
+    </div>
   )
 }
