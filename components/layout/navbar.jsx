@@ -14,6 +14,7 @@ export default function NavBar() {
   const scrolled = useScroll(50);
 
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -50,19 +51,65 @@ export default function NavBar() {
             ></Image>
             <p>Road map Assistant</p>
           </Link>
-          <div className="flex items-center">
+          <div className="relative">
+            <button onClick={() => setIsMenuOpen(!isMenuOpen)} className="sm:hidden">
+              <Image src="/hamburger.png" alt="Menu" width="30" height="30" />
+            </button>
+            <div className={`absolute right-0 mt-2 w-48 bg-white rounded-md overflow-hidden shadow-xl z-10 ${isMenuOpen ? '' : 'hidden'} sm:hidden`}>
+              {isUserLoggedIn && (
+                <>
+                  <Link href="/majors" className="block px-4 py-2 text-sm text-black hover:bg-gray-200">
+                    List of Majors
+                  </Link>
+                  <Link href="/my_roadmaps" className="block px-4 py-2 text-sm text-black hover:bg-gray-200">
+                    My Roadmaps
+                  </Link>
+                  <Link href="/" className="block px-4 py-2 text-sm text-black hover:bg-gray-200">
+                    Home
+                  </Link>
+                  <Link href="/take_a_survey" className="block px-4 py-2 text-sm text-black hover:bg-gray-200">
+                    Take a survey
+                  </Link>
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-black hover:bg-gray-200"
+                    onClick={handleLogout}
+                  >
+                    Log Out
+                  </button>
+                </>
+              )}
+
+              {!isUserLoggedIn && (
+                <>
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-black hover:bg-gray-200"
+                    onClick={() => setShowSignInModal(true)}
+                  >
+                    Sign Up
+                  </button>
+                  <button
+                    className="block w-full text-left px-4 py-2 text-sm text-black hover:bg-gray-200"
+                    onClick={() => setShowLoginModal(true)}
+                  >
+                    Log In
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+          <div className={`hidden sm:flex items-center space-x-4`}>
             {isUserLoggedIn && (
               <>
-                <Link href="/majors" className="mr-4 text-black hover:underline">
+                <Link href="/majors" className="text-black hover:underline">
                   List of Majors
                 </Link>
-                <Link href="/my_roadmaps" className="mr-4 text-black hover:underline">
+                <Link href="/my_roadmaps" className="text-black hover:underline">
                   My Roadmaps
                 </Link>
-                <Link href="/" className="mr-4 text-black hover:underline">
+                <Link href="/" className="text-black hover:underline">
                   Home
                 </Link>
-                <Link href="/take_a_survey" className="mr-4 text-black hover:underline">
+                <Link href="/take_a_survey" className="text-black hover:underline">
                   Take a survey
                 </Link>
                 <button

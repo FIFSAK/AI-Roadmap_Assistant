@@ -229,7 +229,7 @@ export default function Chat() {
               <br />
               - If you have some background, please indicate it, and it will create a roadmap based on your skills.
               <br />
-              - If you have not decided on a specialty, you can go to the <a href="/list-of-majors" className="font-bold underline">List of Majors</a> page or <a href="/take-a-survey" className="font-bold underline">Take a Survey</a>.
+              - If you have not decided on a specialty, you can go to the <a href="/majors" className="font-bold underline">List of Majors</a> page or <a href="/take_a_survey" className="font-bold underline">Take a Survey</a>.
             </p>
             <h2 className="text-2xl font-bold mb-4 text-center text-black">Some examples:</h2>
             <p className="mb-4 text-black text-lg">
