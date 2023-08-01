@@ -78,8 +78,8 @@ const useMessages = () => {
   const [links, setLinks] = useState('');
 
   useEffect(() => {
-    const websocket = new WebSocket("ws://localhost:8000/ws");
-    const websocketLinks = new WebSocket("ws://localhost:8000/links");
+    const websocket = new WebSocket("wss://roadmap-back-zntr.onrender.com/ws");
+    const websocketLinks = new WebSocket("wss://roadmap-back-zntr.onrender.com/links");
 
     websocket.onopen = () => {
       setWs(websocket);
@@ -204,10 +204,11 @@ export default function Chat() {
   const [input, setInput] = useState('')
   const { messages, sendMessage, likeMessage, handleGetLinks, isRoadmapCreated, clearChat } = useMessages()
   const messagesEndRef = useRef(null)
-  const [isInstructionVisible, setIsInstructionVisible] = useState(() => {
-    const storedMessages = localStorage.getItem('chatMessages');
-    return storedMessages ? false : true;
-  });
+  const [isInstructionVisible, setIsInstructionVisible] = useState(true);
+
+  useEffect(() => {
+    setIsInstructionVisible(messages.length === 0);
+  }, [messages]);
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
@@ -222,10 +223,20 @@ export default function Chat() {
       {isInstructionVisible && (
         <div className="flex flex-col items-center justify-start h-screen pt-40">
           <div className="p-5 bg-white rounded shadow-xl max-w-2xl w-full">
-            <h2 className="text-2xl font-bold mb-4 text-center text-black">Instructions for the bot:</h2>
-            <p className="mb-4 text-black text-lg">- Write an instruction here</p>
-            <h2 className="text-2xl font-bold mb-4 text-center text-black">Some examples on how to use this bot:</h2>
-            <p className="mb-4 text-black text-lg">- Write an example here</p>
+            <h2 className="text-2xl font-bold mb-4 text-center text-black">Instructions:</h2>
+            <p className="mb-4 text-black text-lg">
+              - The Roadmap Assistant can create a roadmap for any IT major.
+              <br />
+              - If you have some background, please indicate it, and it will create a roadmap based on your skills.
+              <br />
+              - If you have not decided on a specialty, you can go to the <a href="/list-of-majors" className="font-bold underline">List of Majors</a> page or <a href="/take-a-survey" className="font-bold underline">Take a Survey</a>.
+            </p>
+            <h2 className="text-2xl font-bold mb-4 text-center text-black">Some examples:</h2>
+            <p className="mb-4 text-black text-lg">
+              - Create a roadmap for a backend developer.
+              <br />
+              - Create a roadmap for me based on my skills.
+            </p>
           </div>
         </div>
       )}
@@ -245,7 +256,7 @@ export default function Chat() {
         )}
         <div ref={messagesEndRef} />
       </div>
-      <ClearChatButton clearChat={clearChat}/>
+      <ClearChatButton clearChat={clearChat} />
       <InputMessage input={input} setInput={setInput} sendMessage={handleSendMessage} clearChat={clearChat} />
     </div>
   )
