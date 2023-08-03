@@ -226,7 +226,7 @@ export default function Chat() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both" style={{ paddingBottom: "60px" }}>
+    <div className="flex-1 w-full border-zinc-100 overflow-hidden" style={{ marginBottom: "60px" }}>
       {isInstructionVisible && (
         <div className="flex flex-col items-center justify-start h-screen pt-40">
           <div className="p-5 bg-white rounded shadow-xl max-w-2xl w-full">
