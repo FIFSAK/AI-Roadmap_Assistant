@@ -9,6 +9,7 @@
     margin: 40px 20px;
     transition: 0.3s;
     z-index: 1;
+    white-space: nowrap;
 }
 
 .card.active {
@@ -27,6 +28,9 @@
     font-size: 20px;
     cursor: pointer;
     z-index: 1;
+    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .container {
@@ -53,6 +57,11 @@
     z-index: 0;
     padding-top: 70px; 
     transition: max-height 0.1s ease-in-out, visibility 0.1s ease-in-out;
+     white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* Adjust max-height as needed */
+  max-height: 500px; /* or any other value suitable for your design */
 }
 
 .description.show {
@@ -64,3 +73,28 @@
 .cont {
     width: 100vw;
 }
+
+@media (max-width: 768px) {
+    /* Adjust the card width and padding for smaller screens */
+    .card {
+      width: 90%;
+      margin: 20px 5%;
+    }
+  
+    /* Adjust the name font size and height for smaller screens */
+    .name {
+      font-size: 16px;
+      height: 40px;
+    }
+  
+    /* Adjust the description padding-top for smaller screens */
+    .description {
+      padding-top: 40px;
+    }
+  
+    /* Adjust the description font size and line-height for smaller screens */
+    .description.show {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
