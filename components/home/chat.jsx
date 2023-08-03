@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useEffect, useRef, useState } from 'react';
 import './blur.css';
 import { ChatLine } from './chat-line';
+import Image from "next/image";
 
 // const initialMessages = [
 //   {
@@ -14,12 +15,12 @@ import { ChatLine } from './chat-line';
 const ClearChatButton = ({ clearChat, rightOffset = 8, bottomOffset = 0 }) => {
   return (
     <button
-      className="fixed w-32 mx-auto rounded-full p-1 bg-gray-500 text-white font-bold hover:bg-gray-700 transition-colors"
+      className="fixed rounded-full p-1 text-white font-bold hover:bg-gray-400 transition-colors"
       style={{ right: `${rightOffset}px`, bottom: `${bottomOffset}px` }} // Apply the offsets here
       type="button"
       onClick={clearChat}
     >
-      Clear Chat
+      <Image src="/icons8-erase-48.png" alt="Menu" width="30" height="30" />
     </button>
   );
 };
@@ -33,7 +34,7 @@ const InputMessage = ({ input, setInput, sendMessage, clearChat }) => {
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-b from-transparent via-white to-white flex flex-col items-center clear-both">
-      <div className="mx-2 my-4 flex-1 w-full md:mx-4 md:mb-[52px] lg:max-w-2xl xl:max-w-3xl">
+      <div className="mx-2 my-4 flex-1 w-full md:mx-4 md:mb-[52px] lg:max-w-2xl xl:max-w-3xl relative">
         <div className="relative mx-2 flex flex-row justify-between items-center rounded-md border-black/10 bg-white shadow-[0_0_10px_rgba(0,0,0,0.10)] sm:mx-4">
           <input
             ref={inputRef}
@@ -59,7 +60,13 @@ const InputMessage = ({ input, setInput, sendMessage, clearChat }) => {
             >
               Send
             </button>
-            <ClearChatButton clearChat={clearChat} rightOffset={450} bottomOffset={60} />
+            <button
+              className="rounded-full p-1 text-white font-bold hover:bg-gray-400 transition-colors"
+              type="button"
+              onClick={clearChat}
+            >
+              <Image src="/icons8-erase-48.png" alt="Menu" width="30" height="30" />
+            </button>
           </div>
         </div>
       </div>
