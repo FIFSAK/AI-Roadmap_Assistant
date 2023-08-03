@@ -174,8 +174,11 @@ const useMessages = () => {
             'Authorization': `Bearer ${localStorage.getItem('jwt')}`
           }
         });
+     window.alert('Roadmap saved successfully!');
     } catch (err) {
       console.error(err)
+      // Show an error alert if something goes wrong
+      window.alert('Failed to save the roadmap. Please try again later.');
     }
   }
 
